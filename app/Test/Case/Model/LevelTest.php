@@ -25,7 +25,7 @@ class LevelTest extends CakeTestCase {
         $this->assertTrue($this->Level->rate(1, 1));
         $this->assertEquals(1, $this->Level->field('rating'));
 
-        // accumlates for each level
+        // accumulates for each level
         $this->assertTrue($this->Level->rate(3, 1));
         $this->assertEquals(2, $this->Level->field('rating'));
     }

@@ -318,7 +318,7 @@ Configure::write('Exception', array(
          * By default File is used, but for improved performance you should use APC.
          *
          * Note: 'default' and other application caches should be configured in app/Config/bootstrap.php.
-         *       Please check the comments in boostrap.php for more info on the cache engines available
+         *       Please check the comments in bootstrap.php for more info on the cache engines available
          *       and their settings.
          */
         $engine = 'File';

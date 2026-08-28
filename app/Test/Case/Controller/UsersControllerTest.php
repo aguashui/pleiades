@@ -26,7 +26,7 @@ class UsersControllerTest extends ControllerTestCase {
         $this->assertContains("another level by bob", $result);
     }
 
-    public function testViewNonExistantUser() {
+    public function testViewNonExistentUser() {
         $this->setExpectedException('NotFoundException');
         $this->testAction('/users/view/1000');
     }

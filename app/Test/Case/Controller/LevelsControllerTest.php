@@ -360,7 +360,7 @@ class LevelsControllerTest extends ControllerTestCase {
         $this->testAction('/levels/view/2');
     }
 
-    public function testViewNonExistantLevel() {
+    public function testViewNonExistentLevel() {
         $this->setExpectedException('NotFoundException');
         $result = $this->testAction('/levels/view/1337');
     }

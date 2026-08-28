@@ -81,7 +81,7 @@ class PrgComponent extends Component {
         }
 
         if ($this->controller->presetVars === true) {
-            // auto-set the presetVars based on search defitions in model
+            // auto-set the presetVars based on search definitions in model
             $this->controller->presetVars = array();
             $filterArgs = $this->controller->$model->filterArgs;
             foreach ($filterArgs as $key => $arg) {
@@ -117,7 +117,7 @@ class PrgComponent extends Component {
      * 2) 'value'
      *    The value as it is entered in form
      * 3) 'checkbox'
-     *    Allows to pass several values internaly encoded as string
+     *    Allows to pass several values internally encoded as string
      *
      * 1 use field, model, formField, and modelField
      * 2, 3 need only field parameter

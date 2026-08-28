@@ -171,7 +171,7 @@ class SearchableBehavior extends ModelBehavior {
     }
 
     /**
-     * Replace substitions with original wildcards
+     * Replace substitutions with original wildcards
      * but first, escape the original wildcards in the text to use them as normal search text
      *
      * @param Model $Model
