@@ -6,38 +6,43 @@
 
 ### Dependencies
 
- * PHP, MySQL, Apache, all properly configured
- * Apache mod_rewrite enabled
- * `Override` enabled so that the root `.htaccess` takes effect
+ * PHP (PHP 7.4+ or 8.x supported), MySQL / MariaDB, Apache properly configured
+ * Apache `mod_rewrite` enabled
+ * `AllowOverride All` enabled so that `.htaccess` rules take effect
  * PHP GD module
- * Functional PhpBB3 instance
+ * Functional phpBB3 instance (for user authentication)
  * Git (for retrieving dependencies as submodules)
- * A database for Pleiades (you should probably call it `pleiades`)
+ * A database for Pleiades (e.g. `pleiades`) and phpBB (`phpbb`)
 
 ### Development Dependencies
 
- * PHPUnit from phpunit.de
- * XDebug (available as `php-xdebug` in Debian)
- * A test database (you should probably call it `pleiades_test`)
- * The `compass` gem from rubygems.org
+ * PHPUnit
+ * XDebug
+ * A test database (e.g. `pleiades_test`)
+ * The `compass` gem from rubygems.org (for SASS compilation)
 
 ### Instructions
 
- 1. Checkout the repo into a suitable directory (you **need** to actually check it out via `git`).
- 2. `cd` in to the repo.
- 3. `git submodule init` and then `git submodule update`.
+ 1. Clone the repo: `git clone https://github.com/bitfighter/pleiades.git`
+ 2. `cd pleiades`
+ 3. Initialize and update submodules: `git submodule update --init --recursive`
+    *(Note: CakePHP core is maintained as a submodule at `cakephp/` pinned to CakePHP 2.10.x for PHP 8+ compatibility).*
  4. `cd app/Config` and `cp database.php.default database.php`.
- 5. Edit database.php as needed with MySQL or other database info.
- 6. If this is a production server, edit core.php and change `Configure::write('debug', 2);` to `Configure::write('debug', 0);`
- 7. Load the schema into the DB: `mysql -uroot -proot pleiades < schema.sql`
- 8. It should run now!
+ 5. Edit `database.php` with your MySQL connection details for both the `default` and `forum` datasources.
+ 6. If this is a production server, edit `app/Config/core.php` and set `Configure::write('debug', 0);`.
+ 7. Load the database schema into MySQL: `mysql -uroot -p pleiades < app/Config/Schema/schema_4.php` (or run `./app/Console/cake schema create`).
+ 8. Point your web server document root to `app/webroot` (or run `php -S localhost:8000 -t app/webroot` for local testing).
 
 ### Development instructions
 
- 8. To run tests, visit `localhost/pleiades/test.php`. If any of them fail, expect trouble.
- 9. To work on the stylesheets, run `compass watch sass` from the root directory, and edit `sass/src/pleiades.scss`
- 10. Hackity hack, and send your pull requests to kaen on github :)
- 11. If you have ssh access with a configured pubkey on bitfighter.org, simply running `./deploy.sh` will update the server from the github repo.
+ 1. To run tests, visit `localhost/pleiades/test.php` or execute `./app/Console/cake test app AllTests`.
+ 2. To work on the stylesheets, run `compass watch sass` from the root directory and edit `sass/src/pleiades.scss`.
+ 3. Hackity hack, and send your pull requests to bitfighter on github :)
+ 4. Deploy script: `./deploy.sh` updates the production server.
+
+## Maintenance Notes
+
+For maintenance guidelines and instructions for AI coding assistants working on this codebase, see [AGENTS.md](AGENTS.md).
 
 ## Acknowledgements
 

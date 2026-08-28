@@ -22,8 +22,6 @@ class CommentsController extends AppController {
         $this->Comment->set($this->request->data['Comment']);
         $this->Comment->set('user_id', $this->Auth->user('user_id'));
 	
-	echo "here";
-	
         if(!$this->Comment->save()) {
             throw new BadRequestException("Unable to save comment.");
         }

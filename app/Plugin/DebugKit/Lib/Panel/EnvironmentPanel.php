@@ -55,7 +55,7 @@ class EnvironmentPanel extends DebugPanel {
                 'CSS' => CSS,
                 'CSS_URL' => CSS_URL,
                 'DS' => DS,
-                'FULL_BASE_URL' => FULL_BASE_URL,
+                'FULL_BASE_URL' => defined('FULL_BASE_URL') ? FULL_BASE_URL : Configure::read('App.fullBaseUrl'),
                 'IMAGES' => IMAGES,
                 'IMAGES_URL' => IMAGES_URL,
                 'JS' => JS,

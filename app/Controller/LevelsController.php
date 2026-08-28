@@ -2,14 +2,15 @@
 App::uses('AppController', 'Controller');
 
 function array_flatten($arr) {
-    $arr = array_values($arr);
-    while (list($k,$v)=each($arr)) {
-        if (is_array($v)) {
-            array_splice($arr,$k,1,$v);
-            next($arr);
+    $result = array();
+    foreach ($arr as $item) {
+        if (is_array($item)) {
+            $result = array_merge($result, array_flatten($item));
+        } else {
+            $result[] = $item;
         }
     }
-    return $arr;
+    return $result;
 }
 
 class LevelsController extends AppController {
@@ -485,7 +486,7 @@ class LevelsController extends AppController {
                     $matches = array();
                     if(preg_match('/Script +([^ \n]+)/', $entryContents, $matches) && sizeof($matches) > 1 && !empty($matches[1])) {
                         // we only look in the current directory for levelgen files, so we'll build our search path
-                        $dir_parts = split(DS, $entryFilename);
+                        $dir_parts = explode(DS, $entryFilename);
                         array_pop($dir_parts);
                         $dir = implode(DS, $dir_parts);
                         $levelgenFilename = trim(preg_replace('/\.levelgen$/', '', $matches[1]));

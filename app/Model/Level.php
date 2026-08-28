@@ -45,7 +45,7 @@ class Level extends AppModel {
     // checks that files have levelgens IFF the level has a script line and sets
     // the levelgen filename as needed
     public function levelgenExistence($check) {
-        $scripts = preg_grep('/^\s*Script\s.*$/', split("\n", $this->data['Level']['content']));
+        $scripts = preg_grep('/^\s*Script\s.*$/', explode("\n", $this->data['Level']['content']));
         $parts = preg_split('/\s+/', array_shift($scripts));
 
         // if the Script line with one or more arguments is found, require a levelgen
@@ -124,7 +124,7 @@ class Level extends AppModel {
 
     public function beforeSave($options = array()) {
         if(!empty($this->data['Level']['content'])) {
-            $teams = preg_grep('/^\s*Team/', split("\n", $this->data['Level']['content']));
+            $teams = preg_grep('/^\s*Team/', explode("\n", $this->data['Level']['content']));
             $this->data['Level']['team_count'] = count($teams);
         }
 

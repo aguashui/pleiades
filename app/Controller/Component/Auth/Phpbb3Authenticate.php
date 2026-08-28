@@ -103,7 +103,7 @@ class Phpbb3Authenticate extends BaseAuthenticate {
     }
 
     // from phpbb code
-    function _hash_crypt_private($password, $setting, &$itoa64)
+    function _hash_crypt_private($password, $setting, $itoa64)
     {
         $output = '*';
 
@@ -162,7 +162,7 @@ class Phpbb3Authenticate extends BaseAuthenticate {
     }
 
     // from phpbb code
-    function _hash_gensalt_private($input, &$itoa64, $iteration_count_log2 = 6)
+    function _hash_gensalt_private($input, $itoa64, $iteration_count_log2 = 6)
     {
         if ($iteration_count_log2 < 4 || $iteration_count_log2 > 31)
         {
@@ -177,7 +177,7 @@ class Phpbb3Authenticate extends BaseAuthenticate {
     }
 
     // from phpbb code
-    function _hash_encode64($input, $count, &$itoa64)
+    function _hash_encode64($input, $count, $itoa64)
     {
         $output = '';
         $i = 0;
