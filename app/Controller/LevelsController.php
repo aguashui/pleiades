@@ -74,13 +74,12 @@ class LevelsController extends AppController {
     function _getScreenshot() {
         if ($this->_isValidUpload('screenshot')) {
             $arr = $this->request->data['Level']['screenshot'];
-            $parts = pathinfo($arr['name']);
-            $newFileName = time() . '.' . $parts['extension'];
+            $newFileName = time() . '.png';
             $newPath = APP . 'webroot' . DS . 'img' . DS . $newFileName;
             $newThumbnailPath = APP . 'webroot' . DS . 'img' . DS . 't' .  $newFileName;
 
-            $source = imagecreatefrompng($arr['tmp_name']);
-            if(!is_resource($source)) {
+            $source = @imagecreatefrompng($arr['tmp_name']);
+            if(!$source) {
                 return false;
             }
             $sourceWidth = imagesx($source);
@@ -388,7 +387,7 @@ class LevelsController extends AppController {
 
         $levelName = $level['Level']['level_filename'];
 
-        $tmp = tempnam('/tmp', 'levelzip_');
+        $tmp = tempnam(sys_get_temp_dir(), 'levelzip_');
         $zip = new ZipArchive();
         $zip->open($tmp, ZIPARCHIVE::OVERWRITE);
         $zip->addFromString($levelName, $level['Level']['content']);
