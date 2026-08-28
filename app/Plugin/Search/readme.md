@@ -246,7 +246,7 @@ Additional options parameters:
 
 ## Support ##
 
-For more information about our Professional CakePHP Services please visit the [Cake Development Corporation website](http://cakedc.com).
+For more information about our Professional CakePHP Services please visit the [Cake Development Corporation website](https://cakedc.com).
 
 ## Branch strategy ##
 
