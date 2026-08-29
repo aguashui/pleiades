@@ -73,6 +73,7 @@ Configure::write('Error', array(
  *
  * @see ErrorHandler for more information on exception handling and configuration.
  */
+App::uses('AppExceptionRenderer', 'Error');
 Configure::write('Exception', array(
         'handler' => 'ErrorHandler::handleException',
         'renderer' => 'AppExceptionRenderer',
@@ -355,6 +356,3 @@ Configure::write('Exception', array(
                 'serialize' => ($engine === 'File'),
                 'duration' => $duration
         ));
-
-App::uses('AppExceptionRenderer', 'Error');
-Configure::write('Exception.renderer', 'AppExceptionRenderer');

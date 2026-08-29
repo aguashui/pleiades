@@ -32,8 +32,9 @@ class NotificationsController extends AppController {
 	}
 
 	public function clear() {
+		$this->request->allowMethod('post', 'delete');
 		$this->Notification->deleteAll(array('user_id' => $this->Auth->user('user_id')));
 		$this->Session->setFlash('Notifications cleared.');
-		return $this->redirect($this->referer('/'));
+		return $this->redirect($this->referer('/', true));
 	}
 }

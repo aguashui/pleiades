@@ -74,7 +74,13 @@ class LevelsController extends AppController {
     function _getScreenshot() {
         if ($this->_isValidUpload('screenshot')) {
             $arr = $this->request->data['Level']['screenshot'];
-            $newFileName = time() . '.png';
+
+            $imageInfo = @getimagesize($arr['tmp_name']);
+            if (!$imageInfo || $imageInfo[2] !== IMAGETYPE_PNG) {
+                return false;
+            }
+
+            $newFileName = uniqid('screenshot_', true) . '.png';
             $newPath = APP . 'webroot' . DS . 'img' . DS . $newFileName;
             $newThumbnailPath = APP . 'webroot' . DS . 'img' . DS . 't' .  $newFileName;
 
@@ -87,8 +93,8 @@ class LevelsController extends AppController {
 
             // resize image
             $resizeRatio = max(1, $sourceWidth / 800, $sourceHeight / 600);
-            $destWidth = $sourceWidth / $resizeRatio;
-            $destHeight = $sourceHeight / $resizeRatio;
+            $destWidth = (int)($sourceWidth / $resizeRatio);
+            $destHeight = (int)($sourceHeight / $resizeRatio);
 
             $dest = imagecreatetruecolor($destWidth, $destHeight);
             imagecopyresampled(
@@ -104,8 +110,8 @@ class LevelsController extends AppController {
 
             // create thumbnail
             $resizeRatio = max(1, $sourceWidth / 200, $sourceHeight / 150);
-            $thumbWidth = $sourceWidth / $resizeRatio;
-            $thumbHeight = $sourceHeight / $resizeRatio;
+            $thumbWidth = (int)($sourceWidth / $resizeRatio);
+            $thumbHeight = (int)($sourceHeight / $resizeRatio);
 
             $thumb = imagecreatetruecolor($thumbWidth, $thumbHeight);
             imagecopyresampled(
@@ -122,6 +128,7 @@ class LevelsController extends AppController {
             $this->request->data['Level']['screenshot_filename'] = $newFileName;
             return $newFileName;
         }
+        return false;
     }
 
     /**
@@ -129,12 +136,16 @@ class LevelsController extends AppController {
      * is actually an uploaded file.
      */
     function _isValidUpload($field) {
+        if (!isset($this->request->data['Level'][$field])) {
+            return false;
+        }
         $arr = $this->request->data['Level'][$field];
         return is_array($arr)
-               && !$arr['error']
+               && isset($arr['error'])
+               && $arr['error'] === UPLOAD_ERR_OK
                && !empty($arr['tmp_name'])
-               && $arr['tmp_name'] != 'none';
-               // && is_uploaded_file($arr['tmp_name']);
+               && $arr['tmp_name'] !== 'none'
+               && is_uploaded_file($arr['tmp_name']);
     }
 
     function _performUpload() {
@@ -184,10 +195,10 @@ class LevelsController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->deny();
-        $this->Auth->allow('upload', 'download', 'raw', 'index', 'view', 'add', 'search', 'rate', 'all');
+        $this->Auth->allow('upload', 'download', 'raw', 'index', 'view', 'search', 'rate', 'all');
 
         if($this->Auth->loggedIn()) {
-            $this->Auth->allow('edit');
+            $this->Auth->allow('edit', 'add', 'massupload');
         }
     }
 
@@ -333,6 +344,10 @@ class LevelsController extends AppController {
     }
 
     public function add() {
+        if(!$this->Auth->loggedIn() && !$this->Auth->login()) {
+            throw new ForbiddenException('You must be logged in to upload a level');
+        }
+
         if($this->request->is('post')) {
             $this->Level->create();
             $this->Level->set('user_id', $this->Auth->user('user_id'));
@@ -389,7 +404,12 @@ class LevelsController extends AppController {
 
         $tmp = tempnam(sys_get_temp_dir(), 'levelzip_');
         $zip = new ZipArchive();
-        $zip->open($tmp, ZIPARCHIVE::OVERWRITE);
+        if ($zip->open($tmp, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+            if (file_exists($tmp)) {
+                @unlink($tmp);
+            }
+            throw new InternalErrorException('Could not create zip archive');
+        }
         $zip->addFromString($levelName, $level['Level']['content']);
 
         if(!empty($level['Level']['levelgen'])) {
@@ -397,6 +417,12 @@ class LevelsController extends AppController {
         }
 
         $zip->close();
+
+        register_shutdown_function(function() use ($tmp) {
+            if (file_exists($tmp)) {
+                @unlink($tmp);
+            }
+        });
 
         $filename = preg_replace('/\.level$/', '', $levelName) . '.zip';
         $this->response->file($tmp, array('download' => true, 'name' => $filename));
@@ -443,7 +469,7 @@ class LevelsController extends AppController {
             $filename = $this->request->data['Level']['zipFile']['tmp_name'];
 
             $zip = new ZipArchive();
-            if(!$zip->open($filename)) {
+            if ($zip->open($filename) !== true) {
                 throw new BadRequestException('Invalid .zip file');
             }
 
@@ -485,11 +511,11 @@ class LevelsController extends AppController {
                     $matches = array();
                     if(preg_match('/Script +([^ \n]+)/', $entryContents, $matches) && sizeof($matches) > 1 && !empty($matches[1])) {
                         // we only look in the current directory for levelgen files, so we'll build our search path
-                        $dir_parts = explode(DS, $entryFilename);
+                        $dir_parts = explode('/', $entryFilename);
                         array_pop($dir_parts);
-                        $dir = implode(DS, $dir_parts);
+                        $dir = implode('/', $dir_parts);
                         $levelgenFilename = trim(preg_replace('/\.levelgen$/', '', $matches[1]));
-                        $target = $dir . DS . $levelgenFilename;
+                        $target = !empty($dir) ? $dir . '/' . $levelgenFilename : $levelgenFilename;
 
                         // the client checks for $file.levelgen and then for $file, so we'll do the same
                         $levelgenContents = $zip->getFromName($target . '.levelgen');

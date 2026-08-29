@@ -11,7 +11,7 @@ class LevelFixture extends CakeTestFixture {
                     'description' => 'descriptive',
                     'user_id' => 1,
                     'downloads' => 1,
-                    'last_updated' => 0,
+                    'last_updated' => '1970-01-02 00:00:00',
                     'id' => 1
             ),
             array(
@@ -23,7 +23,7 @@ class LevelFixture extends CakeTestFixture {
                     'description' => 'descriptive',
                     'user_id' => 2,
                     'downloads' => 1,
-                    'last_updated' => 0,
+                    'last_updated' => '1970-01-02 00:00:00',
                     'id' => 2
             ),
             array(
@@ -35,7 +35,7 @@ class LevelFixture extends CakeTestFixture {
                     'description' => 'uploaded by bob',
                     'user_id' => 2,
                     'downloads' => 2,
-                    'last_updated' => 0,
+                    'last_updated' => '1970-01-02 00:00:00',
                     'id' => 3
             ),
             array(
@@ -47,7 +47,7 @@ class LevelFixture extends CakeTestFixture {
                     'description' => 'uploaded by bob',
                     'user_id' => 2,
                     'downloads' => 2,
-                    'last_updated' => 0,
+                    'last_updated' => '1970-01-02 00:00:00',
                     'id' => 4
             ),
     );

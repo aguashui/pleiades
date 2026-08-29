@@ -37,7 +37,7 @@ class AppSchema extends CakeSchema {
 		'screenshot_filename' => array('type' => 'string', 'null' => false, 'default' => 'no-screenshot.png', 'length' => 256, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'level_filename' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 256, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'created' => array('type' => 'timestamp', 'null' => false, 'default' => 'CURRENT_TIMESTAMP'),
-		'last_updated' => array('type' => 'timestamp', 'null' => false, 'default' => '1970-01-01 00:00:01'),
+		'last_updated' => array('type' => 'timestamp', 'null' => false, 'default' => '1970-01-02 00:00:00'),
 		'game_type' => array('type' => 'string', 'null' => false, 'default' => 'Bitmatch', 'length' => 64, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
 		'team_count' => array('type' => 'integer', 'null' => false, 'default' => null),
 		'comment_count' => array('type' => 'integer', 'null' => false, 'default' => null),

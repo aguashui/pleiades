@@ -25,7 +25,7 @@ class AppController extends Controller{
 
         $this->set('currentUserId', $this->Auth->user('user_id'));
         $this->set('currentUserName', $this->Auth->user('username'));
-        $this->set('isAdmin', $this->Session->read('isAdmin'));
+        $this->set('isAdmin', $this->isAdmin());
 
         if($this->Auth->user('user_id')) {
             $Notification = ClassRegistry::init('Notification');
@@ -34,6 +34,6 @@ class AppController extends Controller{
     }
 
     public function isAdmin() {
-        return $this->Session->read('isAdmin');
+        return (bool)($this->Auth->user('user_id') && $this->Session->read('isAdmin'));
     }
 }

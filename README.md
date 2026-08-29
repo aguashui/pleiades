@@ -6,36 +6,34 @@
 
 ### Dependencies
 
- * PHP (PHP 7.4+ or 8.x supported), MySQL / MariaDB, Apache properly configured
- * Apache `mod_rewrite` enabled
- * `AllowOverride All` enabled so that `.htaccess` rules take effect
- * PHP GD module
+ * PHP (PHP 8.1+ recommended; PHP 8.1–8.4 supported)
+ * PHP extensions: `gd`, `pdo`, `pdo_mysql`, `zip`
+ * MySQL / MariaDB database server
+ * Apache with `mod_rewrite` and `AllowOverride All` (or PHP built-in web server for local development)
  * Functional phpBB3 instance (for user authentication)
- * Git (for retrieving dependencies as submodules)
+ * Git (for submodules)
  * A database for Pleiades (e.g. `pleiades`) and phpBB (`phpbb`)
 
 ### Development Dependencies
 
- * PHPUnit
- * XDebug
  * A test database (e.g. `pleiades_test`)
- * The `compass` gem from rubygems.org (for SASS compilation)
+ * The `compass` gem from rubygems.org (for SASS stylesheet compilation)
 
 ### Instructions
 
  1. Clone the repo: `git clone https://github.com/bitfighter/pleiades.git`
  2. `cd pleiades`
  3. Initialize and update submodules: `git submodule update --init --recursive`
-    *(Note: CakePHP core is maintained as a submodule at `cakephp/` pinned to CakePHP 2.10.x for PHP 8+ compatibility).*
- 4. `cd app/Config` and `cp database.php.default database.php`.
- 5. Edit `database.php` with your MySQL connection details for both the `default` and `forum` datasources.
+    *(Note: CakePHP core is maintained as a submodule at `cakephp/` pinned to CakePHP 2.10.24).*
+ 4. Copy database configuration template: `cp app/Config/database.php.default app/Config/database.php`
+ 5. Edit `app/Config/database.php` with your MySQL connection details for both the `default` and `forum` datasources.
  6. If this is a production server, edit `app/Config/core.php` and set `Configure::write('debug', 0);`.
- 7. Load the database schema into MySQL: `mysql -uroot -p pleiades < app/Config/Schema/schema_4.php` (or run `./app/Console/cake schema create`).
+ 7. Initialize the database schema: `./app/Console/cake schema create`
  8. Point your web server document root to `app/webroot` (or run `php -S localhost:8000 -t app/webroot` for local testing).
 
 ### Development instructions
 
- 1. To run tests, visit `localhost/pleiades/test.php` or execute `./app/Console/cake test app AllTests`.
+ 1. To lint PHP syntax across all files: `find app -name "*.php" -exec php -l {} +`
  2. To work on the stylesheets, run `compass watch sass` from the root directory and edit `sass/src/pleiades.scss`.
  3. Hackity hack, and send your pull requests to bitfighter on github :)
  4. Deploy script: `./deploy.sh` updates the production server.

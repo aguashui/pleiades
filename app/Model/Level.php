@@ -129,7 +129,7 @@ class Level extends AppModel {
         }
 
         if(isset($this->data['Level']['content']) || isset($this->data['Level']['levelgen'])) {
-            $this->data['Level']['last_updated'] = date('Y:m:d h:i:s');
+            $this->data['Level']['last_updated'] = date('Y-m-d H:i:s');
         } else {
             unset($this->data['Level']['last_updated']);
         }

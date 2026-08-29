@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, fix/*, feature/* ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint:
+    name: PHP Syntax Lint (PHP ${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3', '8.4']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: gd, pdo, pdo_mysql, zip
+          coverage: none
+
+      - name: Lint PHP files
+        run: |
+          find app -name "*.php" -exec php -l {} +

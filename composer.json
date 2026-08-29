@@ -2,10 +2,13 @@
     "name": "bitfighter/pleiades",
     "description": "The Bitfighter Level Database (Pleiades)",
     "type": "project",
-    "license": "MIT",
     "homepage": "https://bitfighter.org/levels",
     "require": {
-        "php": ">=8.1.0"
+        "php": ">=8.1.0",
+        "ext-gd": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-zip": "*"
     },
     "config": {
         "preferred-install": "dist",

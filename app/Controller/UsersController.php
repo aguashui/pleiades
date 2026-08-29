@@ -24,8 +24,8 @@ class UsersController extends AppController{
     }
 
     function logout(){
-        $this->redirect($this->Auth->logout());
         $this->Session->delete('isAdmin');
+        return $this->redirect($this->Auth->logout());
     }
 
     public function view($id) {
