@@ -55,8 +55,6 @@ class Comment extends AppModel {
             )
     );
 
-    public $uses = array('Level');
-
     public function levelExists() {
         if (!isset($this->data['Comment']) || !isset($this->data['Comment']['level_id'])) {
             return false;

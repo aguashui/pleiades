@@ -16,7 +16,6 @@ echo
   . '<span class="level_info">'
   . '<span class="team_count">' . $level['Level']['team_count'] . '&nbsp;Team&nbsp;</span>'
   . '<span class="game_type">' . $level['Level']['game_type'] . '</span>'
-//  . '<span class="levelgen">' . (empty($level['Level']['levelgen_filename']) ? '' : '&nbsp;-&nbsp;LG') .  '</span>'
   . '</span>'
   . '</div>'
   . $this->Html->link($this->Html->image('t' . $level['Level']['screenshot_filename'], array('class' => 'thumbnail')), '/levels/view/' . $level['Level']['id'], array('class' => 'thumbnail-wrapper', 'escape' => false))

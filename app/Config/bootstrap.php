@@ -120,20 +120,7 @@ Configure::write('App.gametype_prefix_to_pretty_name_map', array(
         'ZoneControl' => 'Zone Control'
 ));
 
-Configure::write('App.gametype_pretty_name_to_abbreviation_map', array(
-        'Bit Match' => 'BM',
-        'Nexus' => 'NEX',
-        'Hold The Flag' => 'HTF',
-        'Capture The Flag' => 'CTF',
-        'Core' => 'COR',
-        'Rabbit' => 'RAB',
-        'Retrieve' => 'RET',
-        'Soccer' => 'SOC',
-        'Zone Control' => 'ZC'
-));
-
 Configure::write('Phpbb.admin_group', 5);
-Configure::write('App.user_db_config', 'forum');
 
 CakePlugin::load('DebugKit');
 CakePlugin::load('Search');

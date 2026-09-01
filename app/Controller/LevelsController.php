@@ -231,21 +231,18 @@ class LevelsController extends AppController {
                     )),
                     'Highest Rated' => $this->Level->find('all', array(
                             'fields' => $fields,
-                            'order' => 'Level.last_updated DESC',
                             'order' => 'Level.rating DESC',
                             'recursive' => 1,
                             'limit' => 8
                     )),
                     'Most Downloaded' => $this->Level->find('all', array(
                             'fields' => $fields,
-                            'order' => 'Level.last_updated DESC',
                             'order' => 'Level.downloads DESC',
                             'recursive' => 1,
                             'limit' => 8
                     )),
                     'Random' => $this->Level->find('all', array(
                             'fields' => $fields,
-                            'order' => 'Level.last_updated DESC',
                             'order' => 'RAND()',
                             'recursive' => 1,
                             'limit' => 8

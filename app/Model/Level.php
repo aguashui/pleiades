@@ -6,10 +6,8 @@ class Level extends AppModel {
             'game_type' => array('type' => 'like'),
             'author' => array('type' => 'like'),
             'tags' => array('type' => 'subquery', 'method' => 'findByTags', 'field' => 'Level.id'),
-            'range' => array('type' => 'expression', 'method' => 'makeRangeCondition', 'field' => 'Levels.rating BETWEEN ? AND ?'),
     );
 
-    public $uses = array('User', 'Rating');
     public $belongsTo = array('User' => array('fields' => array('username', 'user_id')));
     public $hasAndBelongsToMany = array('Tag');
     public $validate = array(
@@ -176,8 +174,6 @@ class Level extends AppModel {
 
         $value = $RATINGS[$value];
 
-        $this->read('user_id');
-        
         $rating = $Rating->findByUserIdAndLevelId($user_id, $this->id);
 
         if(empty($rating)) {
