@@ -1,10 +1,10 @@
 <?php
 class User extends AppModel{
-    var $name = 'User';
-    var $primaryKey = 'user_id';
-    var $displayField = 'username';
-    var $useDbConfig = 'forum';
-    var $hasMany = array(
+    public $name = 'User';
+    public $primaryKey = 'user_id';
+    public $displayField = 'username';
+    public $useDbConfig = 'forum';
+    public $hasMany = array(
         'Level' => array(
             'fields' => array(
                 'id',

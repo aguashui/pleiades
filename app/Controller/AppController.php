@@ -1,6 +1,6 @@
 <?php
 class AppController extends Controller{
-    var $components = array(
+    public $components = array(
             'DebugKit.Toolbar',
             'Auth'=> array(
                     'authenticate' => array(
@@ -13,7 +13,7 @@ class AppController extends Controller{
             'Session'
     );
 
-    var $helpers = array(
+    public $helpers = array(
             'Js',
             'Html'
     );
