@@ -430,9 +430,9 @@ form .error {
 }
 
 form .error-message {
-	-moz-border-radius: none;
-	-webkit-border-radius: none;
-	border-radius: none;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
 	border: none;
 	background: none;
 	margin: 0;
@@ -725,7 +725,7 @@ pre {
 	font-family: monospace;
 	border: 1px solid #bbb;
 	-moz-border-radius: 4px;
-	-wekbkit-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	background: #dcdcdc;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe),
