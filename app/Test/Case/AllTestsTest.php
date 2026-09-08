@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 class AllTestsTest extends CakeTestCase {
     public static function suite() {
         $suite = new CakeTestSuite();

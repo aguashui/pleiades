@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 App::uses('Level', 'Model');
 App::uses('User', 'Model');
 

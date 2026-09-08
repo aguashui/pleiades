@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 App::import('Model', 'Level');
 App::import('Model', 'Rating');
 App::uses('AuthComponent', 'Controller/Component');

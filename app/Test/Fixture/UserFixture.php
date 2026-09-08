@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 class UserFixture extends CakeTestFixture {
     // public $import = array('model' => 'User', 'connection' => 'forum', 'records' => false);
     // all users have password "password"
