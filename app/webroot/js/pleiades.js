@@ -9,8 +9,6 @@ $(function() {
 });
 
 function getColoredSpan(name, r, g, b) {
-    console.log(arguments);
-
     r = parseFloat(r);
     g = parseFloat(g);
     b = parseFloat(b);
@@ -37,8 +35,6 @@ function colorTeamNames() {
     let teamMatch = teamPattern.exec(text);
     const map = [];
     while (teamMatch) {
-        console.log(teamMatch);
-
         const teamName = teamMatch[1];
         const r = teamMatch[2];
         const g = teamMatch[3];
@@ -72,16 +68,15 @@ function submissionClickHandler(el) {
     if ($pre.hasClass('loaded')) {
         $pre.toggle();
         return;
-    } else {
-        const url = $that.attr('href');
-        $.get(url).done(function(data) {
-            console.log(data);
-            $pre.html(data);
-            $pre.removeClass('rainbow');
-            colorTeamNames();
-            Rainbow.color();
-            $pre.addClass('loaded');
-            $pre.show();
-        });
     }
+
+    const url = $that.attr('href');
+    $.get(url).done(function(data) {
+        $pre.html(data);
+        $pre.removeClass('rainbow');
+        colorTeamNames();
+        Rainbow.color();
+        $pre.addClass('loaded');
+        $pre.show();
+    });
 }

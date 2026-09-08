@@ -1,18 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
 
-function array_flatten($arr) {
-    $result = array();
-    foreach ($arr as $item) {
-        if (is_array($item)) {
-            $result = array_merge($result, array_flatten($item));
-        } else {
-            $result[] = $item;
-        }
-    }
-    return $result;
-}
-
 class LevelsController extends AppController {
     public $components = array('Search.Prg');
     public $presetVars = true;
@@ -27,14 +15,26 @@ class LevelsController extends AppController {
             )
     );
 
-    function _checkFile($field) {
+    protected function _arrayFlatten($arr) {
+        $result = array();
+        foreach ($arr as $item) {
+            if (is_array($item)) {
+                $result = array_merge($result, $this->_arrayFlatten($item));
+            } else {
+                $result[] = $item;
+            }
+        }
+        return $result;
+    }
+
+    protected function _checkFile($field) {
         if(!isset($this->request->data['Level'][$field.'File'])) {
             return false;
         }
 
         $arr = $this->request->data['Level'][$field.'File'];
 
-        if ((isset($arr['error']) && $arr['error'] == 0) ||
+        if ((isset($arr['error']) && $arr['error'] === UPLOAD_ERR_OK) ||
                 (!empty( $arr['tmp_name']) && $arr['tmp_name'] != 'none')
         ) {
             if(is_uploaded_file($arr['tmp_name'])) {
@@ -49,8 +49,8 @@ class LevelsController extends AppController {
     }
 
     // gets a level by id and returns appropriate errors
-    function _getLevel($id) {
-        if($id == null) {
+    protected function _getLevel($id) {
+        if($id === null) {
             throw new BadRequestException('You must specify a level');
         }
 
@@ -71,7 +71,7 @@ class LevelsController extends AppController {
      * Attempts to read the uploaded screenshot (as a PNG image), then resizes it and
      * creates a thumbnail as needed.
      */
-    function _getScreenshot() {
+    protected function _getScreenshot() {
         if ($this->_isValidUpload('screenshot')) {
             $arr = $this->request->data['Level']['screenshot'];
 
@@ -135,7 +135,7 @@ class LevelsController extends AppController {
      * Checks that the file uploaded as Level.$field exists and
      * is actually an uploaded file.
      */
-    function _isValidUpload($field) {
+    protected function _isValidUpload($field) {
         if (!isset($this->request->data['Level'][$field])) {
             return false;
         }
@@ -148,7 +148,7 @@ class LevelsController extends AppController {
                && is_uploaded_file($arr['tmp_name']);
     }
 
-    function _performUpload() {
+    protected function _performUpload() {
         if(!$this->Auth->loggedIn()) {
             if(!$this->Auth->login()) {
                 throw new ForbiddenException('You must be logged in');
@@ -530,7 +530,7 @@ class LevelsController extends AppController {
                     $this->Level->validationErrors = array();
                     $level = $this->_performUpload();
                     if(!$level) {
-                        $info['errors'] = array_merge($info['errors'], array_flatten($this->Level->validationErrors));
+                        $info['errors'] = array_merge($info['errors'], $this->_arrayFlatten($this->Level->validationErrors));
                     } else {
                         $info['name'] = $level['Level']['name'];
                         $info['id'] = $level['Level']['id'];

@@ -16,7 +16,9 @@ Pleiades is a web application built on **CakePHP 2.x** that serves as the level 
   - `app/View/` — Views and templates (`.ctp` files).
   - `app/Config/` — Core, route, and database configuration (`core.php`, `routes.php`, `database.php`).
 - `cakephp/` — Git submodule pointing to CakePHP 2.10.24 framework core (`cakephp/lib/Cake/`).
-- `app/Plugin/` — Bundled plugins (`Search`, `DebugKit`).
+- `app/Plugin/` — Bundled plugins (`Search`, `DebugKit`), managed via Composer.
+- `package.json` — Frontend asset dependencies (`jquery`, `bootstrap`) and asset sync scripts.
+- `composer.json` — PHP environment, extensions, and plugin installer definitions.
 - `sass/` — SASS stylesheet source files (compiled using Compass).
 
 ---

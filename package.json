@@ -1,0 +1,14 @@
+{
+  "name": "pleiades-assets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend asset management for Pleiades",
+  "scripts": {
+    "copy-assets": "node scripts/copy-assets.js",
+    "postinstall": "npm run copy-assets"
+  },
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "jquery": "^3.7.1"
+  }
+}

@@ -8,7 +8,7 @@ class UsersController extends AppController{
         $this->Auth->allow('view', 'login', 'logout');
     }
 
-    function login() {
+    public function login() {
         if($this->Auth->login()) {
             $this->User->id = $this->Auth->user('user_id');
             $is_admin = in_array(strval(Configure::read('Phpbb.admin_group')), $this->User->getGroups());
@@ -23,7 +23,7 @@ class UsersController extends AppController{
         }
     }
 
-    function logout(){
+    public function logout(){
         $this->Session->delete('isAdmin');
         return $this->redirect($this->Auth->logout());
     }

@@ -8,6 +8,8 @@
 
  * PHP (PHP 8.1+ recommended; PHP 8.1–8.4 supported)
  * PHP extensions: `gd`, `pdo`, `pdo_mysql`, `zip`
+ * Composer (for PHP dependency and plugin installer management)
+ * Node.js & npm (for frontend asset management)
  * MySQL / MariaDB database server
  * Apache with `mod_rewrite` and `AllowOverride All` (or PHP built-in web server for local development)
  * Functional phpBB3 instance (for user authentication)
@@ -25,11 +27,13 @@
  2. `cd pleiades`
  3. Initialize and update submodules: `git submodule update --init --recursive`
     *(Note: CakePHP core is maintained as a submodule at `cakephp/` pinned to CakePHP 2.10.24).*
- 4. Copy database configuration template: `cp app/Config/database.php.default app/Config/database.php`
- 5. Edit `app/Config/database.php` with your MySQL connection details for both the `default` and `forum` datasources.
- 6. If this is a production server, edit `app/Config/core.php` and set `Configure::write('debug', 0);`.
- 7. Initialize the database schema: `./app/Console/cake schema create`
- 8. Point your web server document root to `app/webroot` (or run `php -S localhost:8000 -t app/webroot` for local testing).
+ 4. Install PHP dependencies: `composer install`
+ 5. Install and build frontend assets: `npm install`
+ 6. Copy database configuration template: `cp app/Config/database.php.default app/Config/database.php`
+ 7. Edit `app/Config/database.php` with your MySQL connection details for both the `default` and `forum` datasources.
+ 8. If this is a production server, edit `app/Config/core.php` and set `Configure::write('debug', 0);`.
+ 9. Initialize the database schema: `./app/Console/cake schema create`
+ 10. Point your web server document root to `app/webroot` (or run `php -S localhost:8000 -t app/webroot` for local testing).
 
 ### Development instructions
 
