@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 App::uses('BaseAuthenticate', 'Controller/Component/Auth');
 
 class Phpbb3Authenticate extends BaseAuthenticate {
@@ -53,8 +55,11 @@ class Phpbb3Authenticate extends BaseAuthenticate {
     }
 
     // from phpbb code
-    function _phpbb_check_hash($password, $hash)
+    protected function _phpbb_check_hash(string $password, ?string $hash): bool
     {
+        if ($hash === null) {
+            return false;
+        }
         $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         if (strlen($hash) == 34)
         {
@@ -65,7 +70,7 @@ class Phpbb3Authenticate extends BaseAuthenticate {
     }
 
     // from phpbb code
-    function _hash_crypt_private($password, $setting, $itoa64)
+    protected function _hash_crypt_private(string $password, string $setting, string $itoa64): string
     {
         $output = '*';
 
@@ -124,7 +129,7 @@ class Phpbb3Authenticate extends BaseAuthenticate {
     }
 
     // from phpbb code
-    function _hash_encode64($input, $count, $itoa64)
+    protected function _hash_encode64(string $input, int $count, string $itoa64): string
     {
         $output = '';
         $i = 0;

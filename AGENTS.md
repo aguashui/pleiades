@@ -50,10 +50,12 @@ When modifying or adding PHP code, strictly adhere to the following:
 ## Database Configuration
 
 The application requires two database connections defined in `app/Config/database.php`:
+
 - `default`: Primary database for level data (`pleiades`).
 - `forum`: Shared database with the phpBB3 instance (`phpbb`) for user authentication (`phpbb_users`, `phpbb_user_group`).
 
 Template for `app/Config/database.php`:
+
 ```php
 class DATABASE_CONFIG {
     public $default = array(
@@ -105,14 +107,19 @@ class DATABASE_CONFIG {
 ## Local Development & Testing
 
 - **Quick Local Server**:
+
   ```bash
   php -S localhost:8000 -t app/webroot
   ```
+
 - **Lint All PHP Files**:
+
   ```bash
   find app -name "*.php" -exec php -l {} +
   ```
+
 - **Database Schema Initialization**:
+
   ```bash
   ./app/Console/cake schema create
   ```

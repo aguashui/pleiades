@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 App::uses('AppController', 'Controller');
 
 class LevelsController extends AppController {
@@ -15,7 +17,7 @@ class LevelsController extends AppController {
             )
     );
 
-    protected function _arrayFlatten($arr) {
+    protected function _arrayFlatten(array $arr): array {
         $result = array();
         foreach ($arr as $item) {
             if (is_array($item)) {
@@ -27,7 +29,7 @@ class LevelsController extends AppController {
         return $result;
     }
 
-    protected function _checkFile($field) {
+    protected function _checkFile(string $field): bool {
         if(!isset($this->request->data['Level'][$field.'File'])) {
             return false;
         }
@@ -135,7 +137,7 @@ class LevelsController extends AppController {
      * Checks that the file uploaded as Level.$field exists and
      * is actually an uploaded file.
      */
-    protected function _isValidUpload($field) {
+    protected function _isValidUpload(string $field): bool {
         if (!isset($this->request->data['Level'][$field])) {
             return false;
         }

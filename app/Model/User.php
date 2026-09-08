@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+App::uses('AppModel', 'Model');
+
 class User extends AppModel{
     public $name = 'User';
     public $primaryKey = 'user_id';
@@ -22,7 +26,7 @@ class User extends AppModel{
     /**
      * Return an array of the groups that this user belongs to
      */
-    public function getGroups() {
+    public function getGroups(): array {
         if(!$this->id) {
             return array();
         }

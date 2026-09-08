@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+App::uses('Controller', 'Controller');
+
 class AppController extends Controller{
     public $components = array(
             'DebugKit.Toolbar',
@@ -33,7 +37,7 @@ class AppController extends Controller{
         }
     }
 
-    public function isAdmin() {
+    public function isAdmin(): bool {
         return (bool)($this->Auth->user('user_id') && $this->Session->read('isAdmin'));
     }
 }

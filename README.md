@@ -6,20 +6,20 @@
 
 ### Dependencies
 
- * PHP (PHP 8.1+ recommended; PHP 8.1–8.4 supported)
- * PHP extensions: `gd`, `pdo`, `pdo_mysql`, `zip`
- * Composer (for PHP dependency and plugin installer management)
- * Node.js & npm (for frontend asset management)
- * MySQL / MariaDB database server
- * Apache with `mod_rewrite` and `AllowOverride All` (or PHP built-in web server for local development)
- * Functional phpBB3 instance (for user authentication)
- * Git (for submodules)
- * A database for Pleiades (e.g. `pleiades`) and phpBB (`phpbb`)
+- PHP (PHP 8.1+ recommended; PHP 8.1–8.4 supported)
+- PHP extensions: `gd`, `pdo`, `pdo_mysql`, `zip`
+- Composer (for PHP dependency and plugin installer management)
+- Node.js & npm (for frontend asset management)
+- MySQL / MariaDB database server
+- Apache with `mod_rewrite` and `AllowOverride All` (or PHP built-in web server for local development)
+- Functional phpBB3 instance (for user authentication)
+- Git (for submodules)
+- A database for Pleiades (e.g. `pleiades`) and phpBB (`phpbb`)
 
 ### Development Dependencies
 
- * A test database (e.g. `pleiades_test`)
- * The `compass` gem from rubygems.org (for SASS stylesheet compilation)
+- A test database (e.g. `pleiades_test`)
+- The `compass` gem from rubygems.org (for SASS stylesheet compilation)
 
 ### Instructions
 

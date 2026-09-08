@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 App::uses('AppModel', 'Model');
 App::uses('Level', 'Model');
 
@@ -55,7 +57,7 @@ class Comment extends AppModel {
             )
     );
 
-    public function levelExists() {
+    public function levelExists(): bool {
         if (!isset($this->data['Comment']) || !isset($this->data['Comment']['level_id'])) {
             return false;
         }
@@ -65,7 +67,7 @@ class Comment extends AppModel {
         return !empty($result['Level']);
     }
 
-    public function userExists() {
+    public function userExists(): bool {
         if (!isset($this->data['Comment']) || !isset($this->data['Comment']['user_id'])) {
             return false;
         }
@@ -100,7 +102,7 @@ class Comment extends AppModel {
        return true;
     }
 
-    private function updateLevelCommentCount($modifier = 0) {
+    private function updateLevelCommentCount(int $modifier = 0): void {
        $levelId = $this->field('level_id');
        $commentCount = $this->find('count', array('conditions' => array('level_id' => $levelId)));
        

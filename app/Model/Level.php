@@ -1,4 +1,8 @@
 <?php
+declare(strict_types=1);
+
+App::uses('AppModel', 'Model');
+
 class Level extends AppModel {
     public $actsAs = array('Search.Searchable');
     public $filterArgs = array(
@@ -29,7 +33,7 @@ class Level extends AppModel {
      *  - groups of spaces or underscores with length > 0 are changed to underscores
      *  - the appropriate extension is appended
      */
-    public static function stringToFileName($text, $extension = '.level') {
+    public static function stringToFileName(string $text, string $extension = '.level'): string {
         $text = preg_replace('/[^a-zA-Z _]+/', '', $text);
         $text = preg_replace('/^[ _]+/', '', $text);
         $text = preg_replace('/[ _]+$/', '', $text);

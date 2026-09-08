@@ -1,58 +1,65 @@
-$(function() {
- $(document).ajaxStart(function() {
-    $('#spinner').fadeIn(50);
- });
+$(function () {
+	$(document).ajaxStart(function () {
+		$("#spinner").fadeIn(50);
+	});
 
- $(document).ajaxComplete(function() {
-    $('#spinner').fadeOut(2000);
- });
+	$(document).ajaxComplete(function () {
+		$("#spinner").fadeOut(2000);
+	});
 });
 
 function getColoredSpan(name, r, g, b) {
-    r = parseFloat(r);
-    g = parseFloat(g);
-    b = parseFloat(b);
+	r = parseFloat(r);
+	g = parseFloat(g);
+	b = parseFloat(b);
 
+	const background =
+		"#" +
+		("00" + Math.floor(r * 255).toString(16)).slice(-2) +
+		("00" + Math.floor(g * 255).toString(16)).slice(-2) +
+		("00" + Math.floor(b * 255).toString(16)).slice(-2);
 
-    const background = "#" +
-        ('00' + Math.floor(r * 255).toString(16)).slice(-2) +
-        ('00' + Math.floor(g * 255).toString(16)).slice(-2) + 
-        ('00' + Math.floor(b * 255).toString(16)).slice(-2);
+	// Choose either a light or dark border depending on the color's "luma",
+	// calculated using Rec. 601 NTSC primaries. This is a weighted average
+	// adjusted for the human perception of a color's lightness
+	const luma = 0.3 * r + 0.59 * g + 0.11 * b;
+	const color = luma > 0.5 ? "#222222" : "#DDDDDD";
 
-    // Choose either a light or dark border depending on the color's "luma",
-    // calculated using Rec. 601 NTSC primaries. This is a weighted average
-    // adjusted for the human perception of a color's lightness
-    const luma = 0.30 * r + 0.59 * g + 0.11 * b;
-    const color = luma > .5 ? '#222222' : '#DDDDDD';
-
-    return '<span class="team-color" style="background: ' + background + '; border: 1px solid ' + color + ';">&nbsp;</span> ' + name;
+	return (
+		'<span class="team-color" style="background: ' +
+		background +
+		"; border: 1px solid " +
+		color +
+		';">&nbsp;</span> ' +
+		name
+	);
 }
 
 function colorTeamNames() {
-    const $el = $('#level-code');
-    const teamPattern = /Team\s+(\w+)\s+([0-9.]+)\s+([0-9.]+)\s+([0-9.]+)/;
-    let text = $el.text();
-    let teamMatch = teamPattern.exec(text);
-    const map = [];
-    while (teamMatch) {
-        const teamName = teamMatch[1];
-        const r = teamMatch[2];
-        const g = teamMatch[3];
-        const b = teamMatch[4];
-        const span = getColoredSpan(teamName, r, g, b);
+	const $el = $("#level-code");
+	const teamPattern = /Team\s+(\w+)\s+([0-9.]+)\s+([0-9.]+)\s+([0-9.]+)/;
+	let text = $el.text();
+	let teamMatch = teamPattern.exec(text);
+	const map = [];
+	while (teamMatch) {
+		const teamName = teamMatch[1];
+		const r = teamMatch[2];
+		const g = teamMatch[3];
+		const b = teamMatch[4];
+		const span = getColoredSpan(teamName, r, g, b);
 
-        const replacement = ['Team', span, r, g, b].join(' ');
-        map.push([teamMatch[0], replacement]);
+		const replacement = ["Team", span, r, g, b].join(" ");
+		map.push([teamMatch[0], replacement]);
 
-        text = text.replace(teamMatch[0], '');
-        teamMatch = teamPattern.exec(text);
-    }
+		text = text.replace(teamMatch[0], "");
+		teamMatch = teamPattern.exec(text);
+	}
 
-    let newText = $el.text();
-    for (const [pattern, replacement] of map) {
-        newText = newText.replace(pattern, replacement);
-    }
-    $el.html(newText);
+	let newText = $el.text();
+	for (const [pattern, replacement] of map) {
+		newText = newText.replace(pattern, replacement);
+	}
+	$el.html(newText);
 }
 
 /**
@@ -62,21 +69,21 @@ function colorTeamNames() {
  * Afterwards it simply toggles the code's visibility
  */
 function submissionClickHandler(el) {
-    const $that = $(el);
-    const $pre = $that.parents('.submission-wrapper').find('.submission');
+	const $that = $(el);
+	const $pre = $that.parents(".submission-wrapper").find(".submission");
 
-    if ($pre.hasClass('loaded')) {
-        $pre.toggle();
-        return;
-    }
+	if ($pre.hasClass("loaded")) {
+		$pre.toggle();
+		return;
+	}
 
-    const url = $that.attr('href');
-    $.get(url).done(function(data) {
-        $pre.html(data);
-        $pre.removeClass('rainbow');
-        colorTeamNames();
-        Rainbow.color();
-        $pre.addClass('loaded');
-        $pre.show();
-    });
+	const url = $that.attr("href");
+	$.get(url).done(function (data) {
+		$pre.html(data);
+		$pre.removeClass("rainbow");
+		colorTeamNames();
+		Rainbow.color();
+		$pre.addClass("loaded");
+		$pre.show();
+	});
 }

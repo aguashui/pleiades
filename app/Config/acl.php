@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * This is the PHP base ACL configuration file.
  *

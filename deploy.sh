@@ -1,42 +1,34 @@
 #!/bin/bash
+set -euo pipefail
+
 # you should configure this stuff
 PUSH_REPOSITORY=origin
 REMOTE_HOST=bitfighter.org
 REMOTE_DIRECTORY=/var/www/html/pleiades
 
 # find base path
-pushd `dirname $0` > /dev/null
-project_root=`pwd`
-popd > /dev/null
+project_root="$(cd "$(dirname "$0")" && pwd)"
 
-if [ "$1" == "-s" ]
-then
+UPDATE_SCHEMA=false
+if [ "${1:-}" = "-s" ]; then
 	echo 'updating schema'
-	UPDATE_SCHEMA=yes
+	UPDATE_SCHEMA=true
 fi
 
-if [ $UPDATE_SCHEMA ]
-then
+if [ "$UPDATE_SCHEMA" = true ]; then
 	# make schema, add a commit
 	echo 'Creating schema dump...'
-	$project_root/app/Console/cake schema generate --snapshot
+	"$project_root/app/Console/cake" schema generate --snapshot
 	git add .
 	git commit -am 'updated schema'
 fi
 
-git push $PUSH_REPOSITORY
+git push "$PUSH_REPOSITORY"
 
-ssh_commands=`cat <<EOF
-cd $REMOTE_DIRECTORY
-git pull
-git submodule init
-git submodule update
-cd app/tmp/cache
-EOF`
+ssh_commands="cd $REMOTE_DIRECTORY && git pull && git submodule init && git submodule update && cd app/tmp/cache"
 
-if [ $UPDATE_SCHEMA ]
-then
-	ssh_commands="$ssh_commands ; ./app/Console/cake schema update --dry-run"
+if [ "$UPDATE_SCHEMA" = true ]; then
+	ssh_commands="$ssh_commands && ./app/Console/cake schema update --dry-run"
 fi
 
-ssh $REMOTE_HOST "$ssh_commands"
+ssh "$REMOTE_HOST" "$ssh_commands"
