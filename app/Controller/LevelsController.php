@@ -344,7 +344,7 @@ class LevelsController extends AppController {
 
     public function add() {
         if(!$this->Auth->loggedIn() && !$this->Auth->login()) {
-            throw new ForbiddenException('You must be logged in to upload a level');
+            throw new ForbiddenException('You must be logged in to upload a level.');
         }
 
         if($this->request->is('post')) {
