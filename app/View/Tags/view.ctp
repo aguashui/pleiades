@@ -44,15 +44,15 @@
 		$i = 0;
 		foreach ($tag['Level'] as $level): ?>
 		<tr>
-			<td><?php echo $level['id']; ?></td>
-			<td><?php echo $level['user_id']; ?></td>
-			<td><?php echo $level['name']; ?></td>
-			<td><?php echo $level['description']; ?></td>
-			<td><?php echo $level['content']; ?></td>
-			<td><?php echo $level['levelgen']; ?></td>
-			<td><?php echo $level['levelgen_filename']; ?></td>
-			<td><?php echo $level['rating']; ?></td>
-			<td><?php echo $level['tags']; ?></td>
+			<td><?php echo h($level['id']); ?></td>
+			<td><?php echo h($level['user_id']); ?></td>
+			<td><?php echo h($level['name']); ?></td>
+			<td><?php echo h($level['description']); ?></td>
+			<td><?php echo h($level['content']); ?></td>
+			<td><?php echo h($level['levelgen']); ?></td>
+			<td><?php echo h($level['levelgen_filename']); ?></td>
+			<td><?php echo h($level['rating']); ?></td>
+			<td><?php echo h($level['tags']); ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'levels', 'action' => 'view', $level['id'])); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'levels', 'action' => 'edit', $level['id'])); ?>

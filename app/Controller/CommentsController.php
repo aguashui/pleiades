@@ -29,7 +29,7 @@ class CommentsController extends AppController {
         }
 
         $this->Session->setFlash('Comment added successfully');
-        return $this->redirect($this->referer());
+        return $this->redirect($this->referer('/', true));
     }
     
     public function delete($id) {
@@ -47,6 +47,6 @@ class CommentsController extends AppController {
     	}
 
     	$this->Comment->delete($id);
-        return $this->redirect($this->referer());
+        return $this->redirect($this->referer('/', true));
     }
 }

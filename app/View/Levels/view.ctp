@@ -30,8 +30,8 @@ if ($level['Level']['downloads'] == 1) {
 echo $this->Html->tag('div', $downloads, array('class' => 'download-count'));
 
 echo '<span class="level_info">';
-echo '<span class="team_count">' . $level['Level']['team_count'] . '&nbsp;Team&nbsp;</span>';
-echo '<span class="game_type">' . $level['Level']['game_type'] . '</span>';
+echo '<span class="team_count">' . intval($level['Level']['team_count']) . '&nbsp;Team&nbsp;</span>';
+echo '<span class="game_type">' . h($level['Level']['game_type']) . '</span>';
 echo '</span>';
 ?>
 
@@ -57,7 +57,7 @@ if($is_owner || $isAdmin) {
 </div>
 <?php
 echo '<span class="screenshot-wrapper">';
-echo '<img class="screenshot" src="' . $this->webroot . 'img/' . $level['Level']['screenshot_filename'] . '">';
+echo '<img class="screenshot" src="' . $this->webroot . 'img/' . h($level['Level']['screenshot_filename']) . '">';
 echo '</span>';
 ?>
 

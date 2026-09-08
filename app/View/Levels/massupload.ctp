@@ -22,15 +22,15 @@ if(!empty($uploads)) {
 			if(empty($upload['warnings'])) {
 				// success
 				$link = $this->Html->link($upload['name'], array('action' => 'view', $upload['id']));
-				array_push($results['success'], array($upload['filename'], $link, ''));
+				array_push($results['success'], array(h($upload['filename']), $link, ''));
 
 			} else {
 				// warning
 				$row = array(
-					$upload['filename'],
-					$upload['name'],
+					h($upload['filename']),
+					h($upload['name']),
 					array(
-						$this->Html->nestedList($upload['warnings']),
+						$this->Html->nestedList(array_map('h', $upload['warnings'])),
 						array('class' => 'messages')
 						)
 					);
@@ -40,10 +40,10 @@ if(!empty($uploads)) {
 		} else {
 			// failure
 			$row = array(
-				$upload['filename'],
-				$upload['name'],
+				h($upload['filename']),
+				h($upload['name']),
 				array(
-					$this->Html->nestedList($upload['errors']),
+					$this->Html->nestedList(array_map('h', $upload['errors'])),
 					array('class' => 'messages')
 					)
 				);

@@ -339,7 +339,7 @@ class LevelsController extends AppController {
             $this->Session->setFlash($err);
             throw new BadRequestException($err);
         }
-        return $this->redirect($this->referer());
+        return $this->redirect($this->referer('/', true));
     }
 
     public function add() {

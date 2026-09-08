@@ -1,9 +1,9 @@
 <div class="notification">
   <div class="notification-created">
-    <?php echo $notification['created']; ?>
+    <?php echo h($notification['created']); ?>
   </div>
   <div class="notification-message">
-    <?php echo $notification['message']; ?>
+    <?php echo h($notification['message']); ?>
   </div>
   <div class="notification-links">
     <?php echo $this->Html->link('view', array('action' => 'delete', $notification['id'])); ?>

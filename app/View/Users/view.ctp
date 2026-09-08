@@ -1,5 +1,5 @@
 <?php
-echo "<h2> {$data['User']['username']}'s Levels</h2>";
+echo "<h2> " . h($data['User']['username']) . "'s Levels</h2>";
 ?>
 <table>
 
@@ -8,9 +8,9 @@ echo $this->Html->tableHeaders(array('Name', 'Game Type', 'Rating', 'Downloads')
 foreach ($data['Level'] as $level) {
 	echo $this->Html->tableCells(array(
 		$this->Html->link($level['name'], "/levels/view/{$level['id']}"),
-		$level['game_type'],
-		$level['rating'],
-		$level['downloads']
+		h($level['game_type']),
+		intval($level['rating']),
+		intval($level['downloads'])
 		));
 }
 ?>
